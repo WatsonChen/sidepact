@@ -28,3 +28,7 @@ Keep changes focused. Update both READMEs when behavior changes, and add a meani
 ## License
 
 Contributions are made under the project's [MIT license](LICENSE).
+
+## Reproduce installation compatibility
+
+Run `node scripts/audit-install.mjs` from a source checkout. This network-dependent audit installs the published 0.5.0 package in temporary clean, React 19, and deliberately conflicting React/react-quill fixtures, with an unrelated package as a control. It disables third-party lifecycle scripts and deletes its fixtures afterward. It does not change a real application. The fixture-only legacy-peer-deps setup is not an installation recommendation.

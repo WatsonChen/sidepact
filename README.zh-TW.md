@@ -44,16 +44,15 @@ npm install -g sidepact
 
 接著切換到實際前端或後端專案，再執行 Sidepact 指令。
 
-也可在各專案中安裝成開發依賴，固定版本：
+也可在各專案中安裝成開發依賴，固定版本。**前提是該專案的依賴樹能被 npm 正常解析。** 實測 React 19 本身能安裝；但 React 19＋react-quill 2 的既有衝突，會擋住 Sidepact 和其他無關套件。見 [安裝實測與 ERESOLVE 排查](docs/INSTALLATION.md)。
 
 ```bash
-npm install -D sidepact
-npx --no-install sidepact enable
+npm install -D sidepact && npx --no-install sidepact enable
 ```
 
 採用專案內安裝時，下方指令都加上 `npx --no-install` 前綴，例如 `npx --no-install sidepact generate`。啟用時會辨識 Git 根目錄的 `node_modules/.bin/sidepact`，讓 agent 也使用這種呼叫方式，不會在找不到套件時擅自下載。請在 Git 根目錄安裝依賴，以使用此自動辨識。
 
-若加入依賴時遇到專案既有的 React 等 peer-dependency 衝突，可先使用全域安裝，另行處理該專案的依賴。Sidepact 本身沒有 runtime 依賴或 React peer 要求。
+安裝失敗時先停止，不繼續啟用。`--force`／`--legacy-peer-deps` 不列為預設解法，因為略過檢查不代表修好相容性。請修正既有依賴，或選用獨立的全域安裝。Sidepact 本身沒有 runtime 依賴或 React peer 要求。
 
 只有要開發 Sidepact 本身時才需要 clone。執行 `npm ci` 會自動編譯 TypeScript；`npm test` 會先建置再測試。發布套件包含編譯後的 JavaScript，不需要 runtime TypeScript loader。
 

@@ -1,5 +1,15 @@
 # Changelog
 
+## Unreleased
+
+### Installation audit and documentation
+
+- Reproduce published 0.5.0 installation in clean, React 19, and conflicting React 19/react-quill 2 fixtures; use an unrelated zero-dependency package as a control.
+- Confirm Sidepact has no published runtime or peer dependencies.
+- Document that existing unresolved peer conflicts can block any project-local addition; do not present legacy-peer-deps as a default fix.
+- Chain install and activation so failed installs do not trigger a second npx failure.
+- Add a reproducible maintainer audit and detailed installation troubleshooting. No runtime behavior or npm release changes.
+
 ## 0.5.0 — 2026-11-02
 
 - Publish the first npm release, `sidepact@0.5.0`, with the owner-selected MIT license.

@@ -46,16 +46,15 @@ npm install -g sidepact
 
 Then switch to the actual application repository before running Sidepact commands.
 
-Alternatively, pin it as a development dependency in each application repo:
+Alternatively, pin it as a development dependency in each application repo. **This requires an application dependency tree that npm can resolve.** A confirmed React 19 + react-quill 2 peer conflict blocks adding Sidepact and unrelated packages alike; React 19 alone does not. See [tested installation cases and ERESOLVE troubleshooting](docs/INSTALLATION.md).
 
 ```bash
-npm install -D sidepact
-npx --no-install sidepact enable
+npm install -D sidepact && npx --no-install sidepact enable
 ```
 
 For a local installation, prefix the commands shown below with `npx --no-install` (for example `npx --no-install sidepact generate`). Activation detects `node_modules/.bin/sidepact` at the Git root and installs the same local launcher in the agent policy. It will not silently download a missing package. Install local dependencies at the Git root for this automatic detection.
 
-If adding any dependency triggers an existing application's peer-dependency conflict, use the global installation while resolving that application's dependency tree separately. Sidepact has no runtime dependencies or React peer requirements.
+If installation fails, stop before activation. Do not make `--force` or `--legacy-peer-deps` the default; these bypass checks rather than establish application compatibility. Resolve the application dependency conflict, or choose the independent global installation. Sidepact has no runtime dependencies or React peer requirements.
 
 To develop Sidepact itself, clone the repository and run `npm ci`; its prepare script compiles the TypeScript source. `npm test` builds and tests the CLI. Published packages contain compiled JavaScript, so no runtime TypeScript loader is needed.
 
