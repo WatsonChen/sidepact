@@ -2,7 +2,8 @@
 
 ## 0.5.0 — 2026-11-02
 
-- Prepare the first npm release with the owner-selected MIT license.
+- Publish the first npm release, `sidepact@0.5.0`, with the owner-selected MIT license.
+- Verify registry metadata and the exact tested tarball hash, then install the published package by name and run its CLI.
 - Compile TypeScript to JavaScript before packing; npm consumers execute `dist/` without TypeScript stripping inside node_modules.
 - Add build/prepare/prepack scripts and include only runtime JavaScript plus documentation in the package.
 - Support project-local activation: managed agent instructions use `npx --no-install sidepact` when installed at the Git root.
