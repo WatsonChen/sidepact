@@ -6,9 +6,9 @@
 
 English | [繁體中文](README.zh-TW.md)
 
-Frontend agent finishes → produces `改動.md` → you send it through Telegram → backend agent reads it, implements changes, and produces `回覆.md`.
+Frontend agent finishes → produces `handoff.md` → you send it through Telegram → backend agent reads it, implements changes, and produces `reply.md`.
 
-Engineers can use the same workflow directly. This local CLI does not call an AI service or send documents automatically. **Current version: 0.4.0; not yet published to npm.**
+Engineers can use the same workflow directly. This local CLI does not call an AI service or send documents automatically. **Current version: 0.4.1; not yet published to npm.**
 
 ## What is automatic?
 
@@ -69,38 +69,38 @@ No `init`, source project name, or recipient setup is required. The source is de
 After your agent or you changes tracked files in the frontend project:
 
 ```bash
-sidepact generate --note "Implement POST /api/register; evidence: src/api/auth.ts:18 calls it; verify: duplicate email response agreed with frontend"
+sidepact generate --lang en --note "Implement POST /api/register; evidence: src/api/auth.ts:18 calls it; verify: duplicate email response agreed with frontend"
 ```
 
-The first note becomes `TASK-001`; added-line TODOs follow it. Give each task enough context for someone without the frontend repo. The CLI prints `handoffs/<id>/改動.md` and the original handoff ID. Send that file to the backend agent's operator.
+The first note becomes `TASK-001`; added-line TODOs follow it. Give each task enough context for someone without the frontend repo. The CLI prints `handoffs/<id>/handoff.md` and the original handoff ID. Send that file to the backend agent's operator.
 
 Inside the **backend project**, import the file directly:
 
 ```bash
-sidepact import /path/to/received/改動.md
+sidepact import /path/to/received/handoff.md
 sidepact show <original-id>
 
 # After implementation and verification:
 sidepact update <original-id> --task TASK-001 --status done --note "Implemented and tested; duplicate email returns 409"
-sidepact reply <original-id> --note "Frontend should handle HTTP 409"
+sidepact reply <original-id> --note "Frontend should handle HTTP 409" --lang en
 ```
 
-Send `handoffs/<reply-id>/回覆.md` back. In the frontend project:
+Send `handoffs/<reply-id>/reply.md` back. In the frontend project:
 
 ```bash
-sidepact import /path/to/received/回覆.md
+sidepact import /path/to/received/reply.md
 sidepact show <original-id>
 ```
 
-Replace `<original-id>` with the actual ID, without angle brackets. The [trial guide](docs/TRY_IT.md) covers troubleshooting. See real [handoff](examples/handoff.md) and [reply](examples/reply.md) examples.
+Replace `<original-id>` with the actual ID, without angle brackets. The [trial guide](docs/TRY_IT.md) covers troubleshooting. See real [handoff](examples/avatar/handoff.md) and [reply](examples/avatar/reply.md) examples.
 
 ## Compare the right Git changes
 
 ```bash
-sidepact generate                         # HEAD → working tree; staged + unstaged tracked changes
-sidepact generate --staged                # HEAD → staging area
-sidepact generate --base main             # merge base(main, HEAD) → HEAD; committed branch changes
-sidepact generate --base HEAD~1           # previous commit → HEAD; last commit only
+sidepact generate --lang en                         # HEAD → working tree; staged + unstaged tracked changes
+sidepact generate --lang en --staged                # HEAD → staging area
+sidepact generate --lang en --base main             # merge base(main, HEAD) → HEAD; committed branch changes
+sidepact generate --lang en --base HEAD~1           # previous commit → HEAD; last commit only
 sidepact generate --to Example/shop-api --lang en --note "Explicit requirement" --output ./handoff.md
 ```
 
@@ -140,7 +140,7 @@ A new `sidepact.config.json` normally omits `project` so detection stays automat
 ```
 
 - `output` is relative to the Git root; `--output` is a file path relative to the current directory. Existing generated files are never overwritten.
-- `language`: `en` or `zh-TW` (default). `--lang` overrides generated-document language. Default file names remain `改動.md` / `回覆.md`.
+- `language`: `en` or `zh-TW` (default). `--lang` overrides generated-document language. English output uses `handoff.md` / `reply.md`; Traditional Chinese output keeps its localized filenames. Explicit `--output` paths are used as supplied. The language setting does not translate supplied notes; write those in the intended language.
 - Recipients are optional. With no `--to` or saved targets, `to: []` means an open handoff. Import records the local receiving identity without changing the original document. Replies automatically address the original sender.
 - Optional targeting: `generate --to Example/shop-api` restricts who can import. `init --to Example/shop-api` saves that default. Existing saved targets remain honored; set `targets` to `[]` in config to return to open handoffs.
 - `init` is optional and preserves unspecified settings when run again.

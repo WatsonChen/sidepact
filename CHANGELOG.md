@@ -1,12 +1,19 @@
 # Changelog
 
-## Unreleased
+## 0.4.1 — 2026-11-02
 
-### Documentation
+### English documentation and output
+
+- Use `handoff.md` and `reply.md` as default filenames for English documents; preserve Chinese filenames for Traditional Chinese output and honor explicit output paths.
+- Correct English README commands and walkthroughs to select English output.
+- Add actual English generated handoff, reply, and confirmation examples; link English pages to English artifacts.
+- Keep imports compatible with existing documents regardless of file name.
+
+### Worked examples
 
 - Add bilingual worked examples for an avatar contract round trip, an uncertain API contract, and a layout-only task with no handoff.
 - Include CLI-generated documents and explain which file users send, how agents respond, and what completion claims mean.
-- Link the examples from both README entry points. No runtime behavior changed.
+- Link the examples from both README entry points. The walkthrough additions do not change runtime behavior.
 
 ## 0.4.0 — 2026-11-02
 

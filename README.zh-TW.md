@@ -6,7 +6,7 @@
 
 前端 agent 完工 → 產生 `改動.md` → 你透過 Telegram 傳檔 → 後端 agent 讀取並修改 → 產生 `回覆.md` 傳回。
 
-工程師自己開發也能使用。目前版本 **0.4.0**，尚未發布至 npm。工具在本機執行，不會自行呼叫 AI 或傳送文件。
+工程師自己開發也能使用。目前版本 **0.4.1**，尚未發布至 npm。工具在本機執行，不會自行呼叫 AI 或傳送文件。
 
 ## 哪些內容是自動產生的？
 
@@ -138,7 +138,7 @@ sidepact generate --to Example/shop-api --lang en --note "明確的需求" --out
 ```
 
 - `output` 相對 Git 根目錄；`--output` 相對執行目錄，指向檔案且不覆寫既有產出。
-- `language` 支援 `zh-TW`（預設）、`en`；生成時可用 `--lang` 覆蓋。兩種語言預設檔名都是 `改動.md`／`回覆.md`。
+- `language` 支援 `zh-TW`（預設）、`en`；生成時可用 `--lang` 覆蓋。繁體中文預設檔名為 `改動.md`／`回覆.md`，英文為 `handoff.md`／`reply.md`；明確指定的 `--output` 路徑不受語言影響。
 - 接收方選填。不指定 `--to` 且沒有預設 targets 時，`to: []` 代表開放交接；匯入時記錄本機接手專案，不改寫原始文件。回覆自動指向原始寄件方。
 - 需要限制對象時才用 `generate --to Example/shop-api`；`init --to Example/shop-api` 可保存預設值。既有預設值仍會生效，想改回開放交接時把設定中的 `targets` 改為 `[]`。
 - `init` 是選用功能，重跑時保留未指定的設定。

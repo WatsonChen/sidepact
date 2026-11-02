@@ -62,7 +62,7 @@ Use the same adapter when checking/removing an explicitly selected installation.
 
 ## Where to find the Markdown
 
-When required, the agent runs `generate`; output remains a new snapshot at `handoffs/<id>/改動.md`. Replies are at `handoffs/<reply-id>/回覆.md`. Nothing is uploaded automatically. Send files through your regular conversation tool.
+When required, the agent runs `generate`. With `--lang en`, snapshots use `handoffs/<id>/handoff.md` and replies use `handoffs/<reply-id>/reply.md`. Traditional Chinese output retains its localized filenames. Explicit output paths remain unchanged. Nothing is uploaded automatically; send the whole file through your regular conversation tool.
 
 ## Official file-loading references
 

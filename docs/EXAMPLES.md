@@ -28,12 +28,12 @@ The agent supplies behavior, file/line evidence, proposed fields, acceptance cri
 
 ```bash
 # Inside the frontend repo, with uncommitted tracked changes
-sidepact generate --note "[required] Extend GET /api/me avatar contract; evidence: member page requires avatarUrl but the known contract has only name; propose string or null; verify both avatar/no-avatar cases; backend must check its implementation"
+sidepact generate --lang en --note "[required] Extend GET /api/me avatar contract; evidence: member page requires avatarUrl but the known contract has only name; propose string or null; verify both avatar/no-avatar cases; backend must check its implementation"
 ```
 
-The agent reports the original handoff ID and `handoffs/<id>/改動.md` path. The user sends that local file through Telegram; there is no separate download or automatic delivery.
+The agent reports the original handoff ID and `handoffs/<id>/handoff.md` path. The user sends that local file through Telegram; there is no separate download or automatic delivery.
 
-Read the [complete generated handoff](../examples/avatar/改動.md) (Traditional Chinese example). Its body contains the changed file, numbered task, evidence, and proposed acceptance criteria. Send the **whole file**, including front matter, rather than copying only the visible checklist.
+Read the [complete generated handoff](../examples/avatar/handoff.md). Its body contains the changed file, numbered task, evidence, and proposed acceptance criteria. Send the **whole file**, including front matter, rather than copying only the visible checklist.
 
 **Backend operator gives the file to their agent:**
 
@@ -42,20 +42,20 @@ Read the [complete generated handoff](../examples/avatar/改動.md) (Traditional
 Inside the backend repo:
 
 ```bash
-sidepact import /path/to/received/改動.md
+sidepact import /path/to/received/handoff.md
 sidepact show <original-id>
 
 # Only after implementation and appropriate verification; replace the note with actual results
 sidepact update <original-id> --task TASK-001 --status done --note "Actual field, type, null behavior, and checks performed"
-sidepact reply <original-id> --note "Frontend follow-up and unresolved questions"
+sidepact reply <original-id> --note "Frontend follow-up and unresolved questions" --lang en
 ```
 
-Read the [complete generated reply](../examples/avatar/回覆.md). It preserves `TASK-001`, has a new document ID, and references the original with `reply_to`.
+Read the [complete generated reply](../examples/avatar/reply.md). It preserves `TASK-001`, has a new document ID, and references the original with `reply_to`.
 
 **Frontend receives the reply:**
 
 ```bash
-sidepact import /path/to/received/回覆.md
+sidepact import /path/to/received/reply.md
 sidepact show <original-id>
 ```
 
@@ -73,16 +73,16 @@ export const mockProfile = { name: "Example" };
 There is no verified API response or shared contract. Outcome: **needs confirmation**, not "backend is missing avatarUrl."
 
 ```bash
-sidepact generate --note "[needs-confirmation] Does GET /api/me already expose an avatar field? Only a frontend mock is available; confirm the field name, type, and no-avatar behavior before proposing a new field"
+sidepact generate --lang en --note "[needs-confirmation] Does GET /api/me already expose an avatar field? Only a frontend mock is available; confirm the field name, type, and no-avatar behavior before proposing a new field"
 ```
 
-Read the [generated confirmation handoff](../examples/confirmation/改動.md). `[needs-confirmation]` is an agent-supplied text label; initial task status remains `pending`.
+Read the [generated confirmation handoff](../examples/confirmation/handoff.md). `[needs-confirmation]` is an agent-supplied text label; initial task status remains `pending`.
 
 The backend may discover an existing `profileImage` field, or confirm that a new field is needed. If discussion is still required, its agent can explicitly record:
 
 ```bash
 sidepact update <original-id> --task TASK-001 --status needs-clarification --note "Verified contract and the question requiring a decision"
-sidepact reply <original-id> --note "Findings and proposed next steps"
+sidepact reply <original-id> --note "Findings and proposed next steps" --lang en
 ```
 
 ## 3. Layout-only change: no handoff

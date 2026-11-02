@@ -185,7 +185,7 @@ export function main(args: string[]): void {
       status: 'pending', created_at: new Date().toISOString(), language: language(one(opts, '--lang') ?? lang), files,
       tasks: [...(opts.get('--note') ?? []), ...todos].map((text, i) => ({ id: `TASK-${String(i + 1).padStart(3, '0')}`, text, status: 'pending' })), notes: [],
     };
-    const destination = output ? resolve(output) : resolve(outputRoot, document.id, '改動.md');
+    const destination = output ? resolve(output) : resolve(outputRoot, document.id, document.language === 'en' ? 'handoff.md' : '改動.md');
     writeOutput(destination, render(document));
     store.save(entry(document, 'outgoing'));
     console.log(`ID: ${document.id}`); return;
@@ -265,7 +265,7 @@ export function main(args: string[]): void {
     status: overall(record.tasks), created_at: new Date().toISOString(), language: language(one(opts, '--lang') ?? lang),
     files: [], tasks: structuredClone(record.tasks), notes: opts.get('--note') ?? [],
   };
-  const destination = one(opts, '--output') ? resolve(one(opts, '--output')!) : resolve(outputRoot, reply.id, '回覆.md');
+  const destination = one(opts, '--output') ? resolve(one(opts, '--output')!) : resolve(outputRoot, reply.id, reply.language === 'en' ? 'reply.md' : '回覆.md');
   writeOutput(destination, render(reply));
   store.save(entry(reply, 'outgoing'));
   console.log(`ID: ${reply.id} (reply to ${reply.reply_to})`);

@@ -590,3 +590,28 @@ test('package identity and CLI use Sidepact while document IDs and protocol rema
   assert.equal(pkg.name, 'sidepact');
   assert.deepEqual(pkg.bin, { sidepact: 'bin/sidepact.js' });
 });
+
+test('English generation and replies use English default filenames while Chinese output stays compatible', t => {
+  const front = fixture(t), back = fixture(t);
+  front.git('remote', 'add', 'origin', 'https://github.com/Example/web.git');
+  back.git('remote', 'add', 'origin', 'https://github.com/Example/api.git');
+  writeFileSync(join(front.cwd, 'api.ts'), '// TODO: confirm API\n');
+  const result = front.run('generate', '--lang', 'en');
+  assert.equal(result.status, 0, result.stderr);
+  const id = result.stdout.match(/^ID: (.+)$/m)[1];
+  const path = join(front.cwd, 'handoffs', id, 'handoff.md');
+  assert.equal(existsSync(path), true);
+  assert.equal(existsSync(join(front.cwd, 'handoffs', id, '改動.md')), false);
+  assert.doesNotMatch(readFileSync(path, 'utf8'), /[\u3400-\u9fff]/);
+  assert.equal(back.run('import', path).status, 0);
+  const response = back.run('reply', id, '--lang', 'en');
+  assert.equal(response.status, 0, response.stderr);
+  const replyId = response.stdout.match(/^ID: (hf-\d{8}-[a-f0-9]{8})/m)[1];
+  const replyPath = join(back.cwd, 'handoffs', replyId, 'reply.md');
+  assert.equal(existsSync(replyPath), true);
+  assert.doesNotMatch(readFileSync(replyPath, 'utf8'), /[\u3400-\u9fff]/);
+  assert.equal(front.run('import', replyPath).status, 0);
+  const zh = front.run('generate', '--lang', 'zh-TW');
+  const zhId = zh.stdout.match(/^ID: (.+)$/m)[1];
+  assert.equal(existsSync(join(front.cwd, 'handoffs', zhId, '改動.md')), true);
+});

@@ -30,6 +30,8 @@ frontend, backend, mobile, and other agents; it does not infer requirements or w
 
 ### Generate when work or confirmation is needed
 - Run commands in the actual application repository, not the sidepact tool clone.
+- Match the requested document language: use \`--lang en\` for English or \`--lang zh-TW\`
+  for Traditional Chinese on generate/reply. Supply notes in that language too; the flag does not translate them.
 - Use \`sidepact generate\` with one single-line \`--note\` per self-contained task. Start the note
   with [required] or [needs-confirmation], then give behavior, file/line evidence, relevant
   endpoint/request/response/error fields, acceptance criteria, and remaining questions.
