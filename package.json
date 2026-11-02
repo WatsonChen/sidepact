@@ -1,6 +1,6 @@
 {
   "name": "sidepact",
-  "version": "0.4.1",
+  "version": "0.5.0",
   "description": "A Markdown handoff bridge for frontend, backend, and cross-platform AI agents",
   "type": "module",
   "bin": {
@@ -8,9 +8,10 @@
   },
   "files": [
     "bin",
-    "src",
+    "dist",
     "README.md",
     "README.zh-TW.md",
+    "LICENSE",
     "CONTRIBUTING.md",
     "examples",
     "docs",
@@ -21,7 +22,11 @@
   },
   "scripts": {
     "test": "node --test test/*.test.js",
-    "check": "tsc --noEmit"
+    "check": "tsc --noEmit",
+    "build": "tsc -p tsconfig.build.json",
+    "prepare": "npm run build",
+    "prepack": "npm run build",
+    "pretest": "npm run build"
   },
   "devDependencies": {
     "@types/node": "^22.0.0",
@@ -46,5 +51,10 @@
   "homepage": "https://github.com/WatsonChen/sidepact#readme",
   "bugs": {
     "url": "https://github.com/WatsonChen/sidepact/issues"
+  },
+  "license": "MIT",
+  "publishConfig": {
+    "access": "public",
+    "registry": "https://registry.npmjs.org/"
   }
 }

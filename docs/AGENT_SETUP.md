@@ -1,12 +1,16 @@
 # One-time agent activation / 一次性啟用 agent
 
-Install sidepact once per computer, then run this in **each actual application repo**:
+Install Sidepact with `npm install -g sidepact`, then run this in **each actual application repo**:
 
 ```bash
 sidepact enable
 ```
 
 工具每台電腦裝一次；啟用則在各個實際前端、後端或 App 專案執行一次。這會加入專案指引，**不會設定接收方、不安裝 push hook、不啟動另一個 agent**。
+
+For project-local installation, use `npm install -D sidepact` at the Git root and `npx --no-install sidepact enable`. The installed policy automatically uses the local launcher when that binary is present. Other command examples on this page use the global form; prefix them with `npx --no-install` for a local installation.
+
+專案內安裝請用 `npm install -D sidepact`，再執行 `npx --no-install sidepact enable`。agent 指引會改用本機套件的呼叫方式，避免找不到全域指令或自動下載。
 
 ## What gets installed
 

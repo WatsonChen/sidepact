@@ -108,7 +108,11 @@ export function agentSetup(root: string, action: 'enable' | 'disable' | 'agent-s
   }
   let next: string;
   if (action === 'enable') {
-    next = range ? original.slice(0, range[0]) + instructions + original.slice(range[1]) : original + (original ? '\n\n' : '') + instructions + '\n';
+    // Local npm installs do not put the binary on a normal shell's PATH.
+    // --no-install prevents an agent from silently fetching a different package.
+    const local = existsSync(resolve(root, 'node_modules', '.bin', 'sidepact')) || existsSync(resolve(root, 'node_modules', '.bin', 'sidepact.cmd'));
+    const policy = local ? instructions.replace(/\bsidepact (?=(?:generate|import|show|update|reply)\b)/g, 'npx --no-install sidepact ') : instructions;
+    next = range ? original.slice(0, range[0]) + policy + original.slice(range[1]) : original + (original ? '\n\n' : '') + policy + '\n';
   } else {
     if (!range) { console.log(`Not enabled / 未啟用: ${path}`); return; }
     const start = range[0] >= 2 && original.slice(range[0] - 2, range[0]) === '\n\n' ? range[0] - 2 : range[0];

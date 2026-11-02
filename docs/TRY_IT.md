@@ -6,9 +6,9 @@ Follow [agent instructions](AGENT_WORKFLOW.md) if coding agents do the work. The
 
 ## Once per computer / 每台電腦安裝一次
 
-Install the tool in its own folder: [English](../README.md#1-install-the-tool-once-per-machine) / [中文](../README.zh-TW.md#1-工具每台電腦安裝一次). Do not clone the tool into each application repository.
+Install through npm: [English](../README.md#1-install-with-npm) / [中文](../README.zh-TW.md#1-透過-npm-安裝). Do not clone the tool into each application repository.
 
-工具只需裝一次。**操作交接時，要離開工具目錄，切換到真正的前端或後端 repo。**
+使用 npm 全域安裝時只需裝一次。**操作交接時，要離開工具目錄，切換到真正的前端或後端 repo。**
 
 ## Open the actual application repo / 切換到真正的專案
 

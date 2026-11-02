@@ -1,5 +1,14 @@
 # Changelog
 
+## 0.5.0 — 2026-11-02
+
+- Prepare the first npm release with the owner-selected MIT license.
+- Compile TypeScript to JavaScript before packing; npm consumers execute `dist/` without TypeScript stripping inside node_modules.
+- Add build/prepare/prepack scripts and include only runtime JavaScript plus documentation in the package.
+- Support project-local activation: managed agent instructions use `npx --no-install sidepact` when installed at the Git root.
+- Replace clone/link onboarding with npm global and project-local installation instructions.
+- Validate both real global and project-local tarball installations before publishing.
+
 ## 0.4.1 — 2026-11-02
 
 ### English documentation and output

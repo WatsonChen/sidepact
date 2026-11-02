@@ -615,3 +615,15 @@ test('English generation and replies use English default filenames while Chinese
   const zhId = zh.stdout.match(/^ID: (.+)$/m)[1];
   assert.equal(existsSync(join(front.cwd, 'handoffs', zhId, '改動.md')), true);
 });
+
+test('local dependency activation uses npx --no-install and remains idempotent', t => {
+  const repo = fixture(t);
+  mkdirSync(join(repo.cwd, 'node_modules/.bin'), { recursive: true });
+  writeFileSync(join(repo.cwd, 'node_modules/.bin/sidepact'), '# local CLI placeholder\n');
+  assert.equal(repo.run('enable').status, 0);
+  const path = join(repo.cwd, 'AGENTS.md');
+  const policy = readFileSync(path, 'utf8');
+  for (const command of ['generate', 'import', 'show', 'update', 'reply']) assert.ok(policy.includes(`npx --no-install sidepact ${command}`));
+  assert.match(repo.run('enable').stdout, /Already enabled/);
+  assert.equal(readFileSync(path, 'utf8'), policy);
+});

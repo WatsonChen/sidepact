@@ -8,7 +8,7 @@ English | [繁體中文](README.zh-TW.md)
 
 Frontend agent finishes → produces `handoff.md` → you send it through Telegram → backend agent reads it, implements changes, and produces `reply.md`.
 
-Engineers can use the same workflow directly. This local CLI does not call an AI service or send documents automatically. **Current version: 0.4.1; not yet published to npm.**
+Engineers can use the same workflow directly. This local CLI does not call an AI service or send documents automatically. **Current version: 0.5.0.**
 
 ## What is automatic?
 
@@ -34,19 +34,30 @@ See the [agent-to-agent workflow and ready-to-use instructions](docs/AGENT_WORKF
 
 Follow the [worked examples](docs/EXAMPLES.md), including what users ask, what agents run, which file gets sent, and how replies return. Browse the [actual generated documents](examples/README.md).
 
-## 1. Install the tool once per machine
+## 1. Install with npm
 
-Requires **Git** and **Node.js 22.18+**. Clone the tool into a separate tools directory, not into every frontend/backend project:
+Requires **Git** and **Node.js 22.18+**. You do not need to clone this repository to use the CLI.
+
+Install once per computer:
 
 ```bash
-# Start in your preferred tools directory.
-git clone https://github.com/WatsonChen/sidepact.git
-cd sidepact
-npm ci
-npm link
+npm install -g sidepact
 ```
 
-`npm link` makes `sidepact` available from other directories. This clone is the **tool's source code**, not the project whose changes you want to hand off. To update this clone later: `git pull --ff-only`, then `npm ci`.
+Then switch to the actual application repository before running Sidepact commands.
+
+Alternatively, pin it as a development dependency in each application repo:
+
+```bash
+npm install -D sidepact
+npx --no-install sidepact enable
+```
+
+For a local installation, prefix the commands shown below with `npx --no-install` (for example `npx --no-install sidepact generate`). Activation detects `node_modules/.bin/sidepact` at the Git root and installs the same local launcher in the agent policy. It will not silently download a missing package. Install local dependencies at the Git root for this automatic detection.
+
+If adding any dependency triggers an existing application's peer-dependency conflict, use the global installation while resolving that application's dependency tree separately. Sidepact has no runtime dependencies or React peer requirements.
+
+To develop Sidepact itself, clone the repository and run `npm ci`; its prepare script compiles the TypeScript source. `npm test` builds and tests the CLI. Published packages contain compiled JavaScript, so no runtime TypeScript loader is needed.
 
 ## 2. Generate inside your actual project
 
@@ -170,4 +181,4 @@ npm test
 
 ## License
 
-A license has not been selected yet. This is public source code; no open-source license is currently granted.
+[MIT](LICENSE), copyright 2026 WatsonChen.

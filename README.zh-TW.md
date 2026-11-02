@@ -6,7 +6,7 @@
 
 前端 agent 完工 → 產生 `改動.md` → 你透過 Telegram 傳檔 → 後端 agent 讀取並修改 → 產生 `回覆.md` 傳回。
 
-工程師自己開發也能使用。目前版本 **0.4.1**，尚未發布至 npm。工具在本機執行，不會自行呼叫 AI 或傳送文件。
+工程師自己開發也能使用。目前版本 **0.5.0**。工具在本機執行，不會自行呼叫 AI 或傳送文件。
 
 ## 哪些內容是自動產生的？
 
@@ -32,19 +32,30 @@
 
 [完整情境範例](docs/EXAMPLES.zh-TW.md) 包含「你對 agent 說什麼、agent 執行什麼、你傳哪個檔案、後端如何回覆」。也能直接閱讀 [實際產出的文件](examples/README.md)。
 
-## 1. 工具每台電腦安裝一次
+## 1. 透過 npm 安裝
 
-需要 Git 與 Node.js 22.18 以上。把工具放在獨立的工具目錄，不必在每個前後端專案各 clone 一份：
+需要 Git 與 Node.js 22.18 以上。**使用工具不需要先 clone 這個 repository。**
+
+每台電腦全域安裝一次：
 
 ```bash
-# 先切換到你放工具的位置，再執行
-git clone https://github.com/WatsonChen/sidepact.git
-cd sidepact
-npm ci
-npm link
+npm install -g sidepact
 ```
 
-`npm link` 讓其他資料夾也能使用 `sidepact`。這裡 clone 的是工具原始碼，**不是要被分析的前端或後端專案**。之後更新工具時，在這個一般 clone 內執行 `git pull --ff-only` 與 `npm ci`。
+接著切換到實際前端或後端專案，再執行 Sidepact 指令。
+
+也可在各專案中安裝成開發依賴，固定版本：
+
+```bash
+npm install -D sidepact
+npx --no-install sidepact enable
+```
+
+採用專案內安裝時，下方指令都加上 `npx --no-install` 前綴，例如 `npx --no-install sidepact generate`。啟用時會辨識 Git 根目錄的 `node_modules/.bin/sidepact`，讓 agent 也使用這種呼叫方式，不會在找不到套件時擅自下載。請在 Git 根目錄安裝依賴，以使用此自動辨識。
+
+若加入依賴時遇到專案既有的 React 等 peer-dependency 衝突，可先使用全域安裝，另行處理該專案的依賴。Sidepact 本身沒有 runtime 依賴或 React peer 要求。
+
+只有要開發 Sidepact 本身時才需要 clone。執行 `npm ci` 會自動編譯 TypeScript；`npm test` 會先建置再測試。發布套件包含編譯後的 JavaScript，不需要 runtime TypeScript loader。
 
 ## 2. 在真正的專案裡產生交接
 
@@ -166,4 +177,4 @@ npm test
 
 [回報問題](https://github.com/WatsonChen/sidepact/issues/new/choose) · [貢獻說明](CONTRIBUTING.md) · [Roadmap](docs/ROADMAP.md) · [修改紀錄](CHANGELOG.md)
 
-目前尚未選定開源授權。
+採用 [MIT 授權](LICENSE)，copyright 2026 WatsonChen。

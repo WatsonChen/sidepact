@@ -36,10 +36,10 @@ Use the [agent instructions](AGENT_WORKFLOW.md) and [trial guide](TRY_IT.md). Cl
 
 ## Before a wider release
 
-- Choose a license with the project owner.
+- MIT license selected and included.
 - Check npm package-name availability and CLI conflicts.
 - Verify installation on supported Node versions and operating systems.
-- Publish a tested package and tagged release.
+- Publish tested npm packages; keep release notes and installation instructions aligned.
 
 ## Deferred: third-party platforms and AI
 

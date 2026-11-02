@@ -38,7 +38,7 @@ Set these through the gear next to **About** on the repository home page. Topics
 
 ## Before inviting wider use
 
-1. Choose a license with the project owner. Public visibility alone does not grant an open-source license.
+1. MIT license is included; preserve it in package releases.
 2. Keep English and Traditional Chinese instructions aligned with actual CLI behavior.
 3. Verify the npm name and publish a tested, tagged release with a short installation command.
 4. Keep a complete generated document and a clear step-by-step handoff/reply guide in the repository. A demo video is not required.

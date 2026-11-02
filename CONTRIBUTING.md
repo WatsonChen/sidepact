@@ -25,6 +25,6 @@ node bin/sidepact.js --help
 
 Keep changes focused. Update both READMEs when behavior changes, and add a meaningful integration test for changes to Git comparison or document generation.
 
-## Licensing status
+## License
 
-No project license has been selected yet. Resolve licensing with the maintainer before submitting code intended for redistribution. Bug reports and workflow feedback are welcome now.
+Contributions are made under the project's [MIT license](LICENSE).
